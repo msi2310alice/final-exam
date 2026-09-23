@@ -11,7 +11,7 @@ import src.model.BenhAn;
 
 public class BenhAnService {
     private final List<BenhAn> danhSachBenhAn = new ArrayList<>();
-    private static final String FILE_PATH = "data/medical_records.csv";
+    private static final String FILE_PATH = "src/data/medical_records.csv";
 
     public void add(BenhAn benhAn) {
         danhSachBenhAn.add(benhAn);
@@ -76,7 +76,7 @@ public class BenhAnService {
 
         } catch (IOException e) {
 
-            System.out.println("Loi ghi file.");
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 } 

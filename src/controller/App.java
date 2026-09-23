@@ -183,7 +183,18 @@ public class App {
             }
 
             System.out.print("Thoi han VIP: ");
-            String thoiHanVIP = scanner.nextLine();
+            String thoiHanVIP = "";
+            while (true) {
+
+                System.out.print("Thoi han VIP (dd/MM/yyyy): ");
+                thoiHanVIP = scanner.nextLine();
+
+                if (Validate.isValidDate(thoiHanVIP)) {
+                    break;
+                }
+
+                System.out.println("Ngay khong hop le.");
+            }
 
             BenhAnVip benhAn = new BenhAnVip(
                     soThuTu,
@@ -198,6 +209,7 @@ public class App {
             );
 
             benhAnService.add(benhAn);
+            
 
         } else {
 
