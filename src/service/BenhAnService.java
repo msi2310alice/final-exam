@@ -1,5 +1,8 @@
 package src.service;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +11,11 @@ import src.model.BenhAn;
 
 public class BenhAnService {
     private final List<BenhAn> danhSachBenhAn = new ArrayList<>();
+    private static final String FILE_PATH = "data/medical_records.csv";
 
     public void add(BenhAn benhAn) {
         danhSachBenhAn.add(benhAn);
+        writeFile();
     }
 
     public List<BenhAn> getAll() {
@@ -29,7 +34,14 @@ public class BenhAnService {
         return null;
     }
     public boolean remove(BenhAn benhAn) {
-        return danhSachBenhAn.remove(benhAn);
+        boolean result = danhSachBenhAn.remove(benhAn);
+
+        if(result) {
+            writeFile();
+        }
+
+        return result;
+
     }
 
     public int getNextSoThuTu() {
@@ -42,6 +54,29 @@ public class BenhAnService {
     public void checkDuplicate(String maBenhAn) throws DuplicateMedicalRecordException {
         if(findByMaBenhAn(maBenhAn) != null) {
             throw new DuplicateMedicalRecordException("Benh an da ton tai");
+        }
+    }
+
+    private void writeFile() {
+
+        try {
+
+            BufferedWriter writer =
+                    new BufferedWriter(
+                            new FileWriter(FILE_PATH)
+                    );
+
+            for (BenhAn benhAn : danhSachBenhAn) {
+
+                writer.write(benhAn.toString());
+                writer.newLine();
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+
+            System.out.println("Loi ghi file.");
         }
     }
 } 

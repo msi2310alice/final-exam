@@ -118,16 +118,29 @@ public class App {
 
         System.out.print("Ngay ra vien: ");
         String ngayRaVien = "";
-         while (true) {
+        while (true) {
 
             System.out.print("Ngay ra vien (dd/MM/yyyy): ");
             ngayRaVien = scanner.nextLine();
 
-            if (Validate.isValidDate(ngayRaVien)) {
-                break;
+            if (!Validate.isValidDate(ngayRaVien)) {
+
+                System.out.println("Ngay khong hop le.");
+                continue;
             }
 
-            System.out.println("Ngay khong hop le.");
+            if (!Validate.isValidDateRange(
+                    ngayNhapVien,
+                    ngayRaVien)) {
+
+                System.out.println(
+                        "Ngay ra vien phai >= ngay nhap vien."
+                );
+
+                continue;
+            }
+
+            break;
         }
 
         System.out.print("Ly do nhap vien: ");
@@ -154,7 +167,20 @@ public class App {
         } else if (loai == 2) {
 
             System.out.print("Loai VIP: ");
-            String loaiVIP = scanner.nextLine();
+            String loaiVIP = "";
+            while (true) {
+
+                System.out.print("Loai VIP (VIP I / VIP II / VIP III): ");
+                loaiVIP = scanner.nextLine();
+
+                if (Validate.isValidVip(loaiVIP)) {
+                    break;
+                }
+
+                System.out.println(
+                        "Chi duoc chon VIP I, VIP II hoac VIP III."
+                );
+            }
 
             System.out.print("Thoi han VIP: ");
             String thoiHanVIP = scanner.nextLine();
