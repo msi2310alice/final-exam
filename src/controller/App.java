@@ -8,6 +8,9 @@ import src.model.BenhAnThuong;
 import src.model.BenhAnVip;
 import src.service.BenhAnService;
 
+import src.exception.DuplicateMedicalRecordException;
+import src.util.Validate;
+
 public class App {
     private final Scanner scanner = new Scanner(System.in);
     private final BenhAnService benhAnService = new BenhAnService();
@@ -65,7 +68,33 @@ public class App {
         int soThuTu = benhAnService.getNextSoThuTu();
 
         System.out.print("Ma benh an: ");
-        String maBenhAn = scanner.nextLine();
+        String maBenhAn = "";
+
+        while (true) {
+
+            System.out.print("Ma benh an: ");
+            maBenhAn = scanner.nextLine();
+
+            if (!Validate.isValidMaBenhAn(maBenhAn)) {
+
+                System.out.println(
+                        "Ma benh an phai co dang BA-XXX. VD: BA-001"
+                );
+
+                continue;
+            }
+
+            try {
+
+                benhAnService.checkDuplicate(maBenhAn);
+
+                break;
+
+            } catch (DuplicateMedicalRecordException e) {
+
+                System.out.println(e.getMessage());
+            }
+        }
 
         System.out.print("Ma benh nhan: ");
         String maBenhNhan = scanner.nextLine();
@@ -74,10 +103,32 @@ public class App {
         String tenBenhNhan = scanner.nextLine();
 
         System.out.print("Ngay nhap vien: ");
-        String ngayNhapVien = scanner.nextLine();
+        String ngayNhapVien = "";
+        while (true) {
+
+            System.out.print("Ngay nhap vien (dd/MM/yyyy): ");
+            ngayNhapVien = scanner.nextLine();
+
+            if (Validate.isValidDate(ngayNhapVien)) {
+                break;
+            }
+
+            System.out.println("Ngay khong hop le.");
+        }
 
         System.out.print("Ngay ra vien: ");
-        String ngayRaVien = scanner.nextLine();
+        String ngayRaVien = "";
+         while (true) {
+
+            System.out.print("Ngay ra vien (dd/MM/yyyy): ");
+            ngayRaVien = scanner.nextLine();
+
+            if (Validate.isValidDate(ngayRaVien)) {
+                break;
+            }
+
+            System.out.println("Ngay khong hop le.");
+        }
 
         System.out.print("Ly do nhap vien: ");
         String lyDoNhapVien = scanner.nextLine();

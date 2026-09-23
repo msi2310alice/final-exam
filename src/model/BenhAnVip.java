@@ -1,4 +1,4 @@
-package src;
+package src.model;
 
 public class BenhAnVip extends BenhAn{
     private String loaiVip;

@@ -1,4 +1,5 @@
-package src;
+package src.model;
+
 public class BenhAnThuong extends BenhAn{
     private double phiNamVien;
 
