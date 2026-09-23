@@ -133,7 +133,32 @@ public class App {
     }
     
     private void xoa() {
+        System.out.print("Nhap ma benh an can xoa: ");
+        String maBenhAn = scanner.nextLine();
 
+        BenhAn benhAn = benhAnService.findByMaBenhAn(maBenhAn);
+
+        if (benhAn == null) {
+
+            System.out.println("Khong tim thay benh an.");
+            return;
+        }
+
+        System.out.print("Ban co chac muon xoa? Yes/No: ");
+        String confirm = scanner.nextLine();
+
+        if (confirm.equalsIgnoreCase("Yes")) {
+
+            benhAnService.remove(benhAn);
+
+            System.out.println("Xoa thanh cong.");
+
+            xemDanhSach();
+
+        } else {
+
+            System.out.println("Huy xoa.");
+        }
     }
 
     private void xemDanhSach() {
